@@ -1,15 +1,23 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Member {
-    
-    @Id // 기본키
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto inc
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String name;
+
+    @Column(name = "name")
+    private String username;
+
+    public Member() {
+    }
 
     public Long getId() {
         return id;
@@ -19,11 +27,11 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
