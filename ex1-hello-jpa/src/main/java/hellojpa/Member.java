@@ -22,7 +22,8 @@ public class Member extends BaseEntity{
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // 지연로딩
+//    @ManyToOne(fetch = FetchType.EAGER) // 즉시로딩 실무에선 사용 x
     @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
