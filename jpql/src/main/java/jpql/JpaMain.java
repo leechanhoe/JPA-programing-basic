@@ -1,4 +1,4 @@
-package hellojpa;
+package jpql;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,12 +20,22 @@ public class JpaMain {
         tx.begin();
 
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
 
-            Root<Member> m = query.from(Member.class);
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
-            List<Member> resultList = em.createQuery(cq).getResultList();
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAge(10);
+
+            member.setTeam(team);
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            List<Member> result = em.createQuery("select m from Member m inner join m.team t", Member.class).getResultList();
 
             tx.commit();
         }catch (Exception e){
@@ -39,3 +49,4 @@ public class JpaMain {
     }
 
 }
+
